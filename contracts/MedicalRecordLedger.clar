@@ -55,7 +55,7 @@
     (asserts! (> (len facility-location) u0) err-invalid-location)
     
     ;; Check if provider has reached record limit
-    (asserts! (&lt; (len provider-current-records) u100) err-too-many-records)
+    (asserts! (< (len provider-current-records) u100) err-too-many-records)
     
     ;; Store the record data
     (map-set records record-id {
@@ -82,7 +82,7 @@
 (define-public (validate-record (record-id uint))
   (begin
     ;; Validate record ID
-    (asserts! (&lt; record-id (var-get record-id-sequence)) err-invalid-record-id)
+    (asserts! (< record-id (var-get record-id-sequence)) err-invalid-record-id)
     
     (let
       ((record (unwrap! (map-get? records record-id) err-record-not-found)))
